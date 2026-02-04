@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="necropixel_tactics"
-run/main_scene="res://scenes/debug/DataDebug.tscn"
+run/main_scene="res://scenes/app/App.tscn"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 

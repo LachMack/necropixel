@@ -1,0 +1,161 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scenes/ui/HideoutHub.gd" id="1"]
+
+[node name="HideoutHub" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Root" type="VBoxContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = -24.0
+theme_override_constants/separation = 14
+
+[node name="Header" type="HBoxContainer" parent="Root"]
+theme_override_constants/separation = 16
+
+[node name="FactionLabel" type="Label" parent="Root/Header"]
+unique_name_in_owner = true
+text = "Faction: -"
+
+[node name="CreditsLabel" type="Label" parent="Root/Header"]
+unique_name_in_owner = true
+text = "Credits: -"
+
+[node name="FighterCountLabel" type="Label" parent="Root/Header"]
+unique_name_in_owner = true
+text = "Fighters: -"
+
+[node name="LastMissionLabel" type="Label" parent="Root/Header"]
+unique_name_in_owner = true
+text = "Last mission: (none)"
+
+[node name="HeaderSpacer" type="Control" parent="Root/Header"]
+size_flags_horizontal = 3
+
+[node name="MenuButton" type="Button" parent="Root/Header"]
+unique_name_in_owner = true
+text = "Back to Menu"
+
+[node name="DevBar" type="HBoxContainer" parent="Root"]
+theme_override_constants/separation = 12
+
+[node name="DevHint" type="Label" parent="Root/DevBar"]
+text = "Dev:"
+
+[node name="SaveButton" type="Button" parent="Root/DevBar"]
+unique_name_in_owner = true
+text = "Save"
+
+[node name="ReloadButton" type="Button" parent="Root/DevBar"]
+unique_name_in_owner = true
+text = "Reload"
+
+[node name="DevSpacer" type="Control" parent="Root/DevBar"]
+size_flags_horizontal = 3
+
+[node name="StatusLabel" type="Label" parent="Root/DevBar"]
+unique_name_in_owner = true
+text = ""
+
+[node name="Tabs" type="TabBar" parent="Root"]
+unique_name_in_owner = true
+tab_count = 3
+current_tab = 0
+tabs_visible = true
+tab_0/title = "Roster"
+tab_1/title = "Stash"
+tab_2/title = "Missions"
+
+[node name="Body" type="PanelContainer" parent="Root"]
+size_flags_vertical = 3
+
+[node name="Stack" type="VBoxContainer" parent="Root/Body"]
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="RosterView" type="HSplitContainer" parent="Root/Body/Stack"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+split_offset = 280
+
+[node name="RosterLeft" type="VBoxContainer" parent="Root/Body/Stack/RosterView"]
+theme_override_constants/separation = 8
+size_flags_horizontal = 3
+
+[node name="RosterTitle" type="Label" parent="Root/Body/Stack/RosterView/RosterLeft"]
+text = "Gang Roster"
+
+[node name="RosterList" type="ItemList" parent="Root/Body/Stack/RosterView/RosterLeft"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+
+[node name="RosterRight" type="VBoxContainer" parent="Root/Body/Stack/RosterView"]
+theme_override_constants/separation = 8
+size_flags_horizontal = 3
+
+[node name="DetailsTitle" type="Label" parent="Root/Body/Stack/RosterView/RosterRight"]
+text = "Fighter Details"
+
+[node name="DetailsText" type="RichTextLabel" parent="Root/Body/Stack/RosterView/RosterRight"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[i]Select a fighter to view details.[/i]"
+
+[node name="StashView" type="VBoxContainer" parent="Root/Body/Stack"]
+unique_name_in_owner = true
+visible = false
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="StashTitle" type="Label" parent="Root/Body/Stack/StashView"]
+text = "Gang Stash"
+
+[node name="StashSummary" type="Label" parent="Root/Body/Stack/StashView"]
+unique_name_in_owner = true
+text = "Items: 0"
+
+[node name="StashList" type="ItemList" parent="Root/Body/Stack/StashView"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+
+[node name="StashDetailsTitle" type="Label" parent="Root/Body/Stack/StashView"]
+text = "Item Details"
+
+[node name="StashDetailsText" type="RichTextLabel" parent="Root/Body/Stack/StashView"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[i]Select an item to view details.[/i]"
+
+[node name="MissionsView" type="VBoxContainer" parent="Root/Body/Stack"]
+unique_name_in_owner = true
+visible = false
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="MissionsTitle" type="Label" parent="Root/Body/Stack/MissionsView"]
+text = "Missions"
+
+[node name="StartTutorialButton" type="Button" parent="Root/Body/Stack/MissionsView"]
+unique_name_in_owner = true
+text = "Start Tutorial Skirmish"
+
+[node name="MissionLogLabel" type="Label" parent="Root/Body/Stack/MissionsView"]
+text = "Mission Log"
+
+[node name="MissionLogList" type="ItemList" parent="Root/Body/Stack/MissionsView"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+
+[node name="ClearMissionLogButton" type="Button" parent="Root/Body/Stack/MissionsView"]
+unique_name_in_owner = true
+text = "Clear Log"

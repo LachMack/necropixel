@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "savegame.schema.json",
+  "type": "object",
+  "required": ["campaign_id", "faction_id", "credits", "fighters"],
+  "properties": {
+    "campaign_id": { "type": "string" },
+    "faction_id": { "type": "string" },
+    "credits": { "type": "integer", "minimum": 0 },
+    "fighters": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "archetype_id", "name", "xp", "status", "loadout"],
+        "properties": {
+          "id": { "type": "string" },
+          "archetype_id": { "type": "string" },
+          "name": { "type": "string" },
+          "xp": { "type": "integer", "minimum": 0 },
+          "status": {
+            "type": "object",
+            "properties": {
+              "alive": { "type": "boolean" },
+              "injuries": { "type": "array", "items": { "type": "string" } }
+            }
+          },
+          "loadout": { "type": "object" }
+        }
+      }
+    },
+    "stash": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    },
+    "completed_missions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "default": []
+    }
+  }
+}
