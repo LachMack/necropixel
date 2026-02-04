@@ -1,0 +1,79 @@
+[
+  {
+	"id": "lasgun",
+	"name": "Lasgun",
+	"category": "basic",
+	"cost": 15,
+	"profiles": {
+	  "standard": {
+		"range": { "short": 12, "long": 24 },
+		"acc": { "short": 1, "long": 0 },
+		"s": 3,
+		"ap": 0,
+		"d": 1,
+		"ammo": { "check": 2, "type": "standard" },
+		"traits": []
+	  }
+	}
+  },
+  {
+	"id": "laspistol",
+	"name": "Laspistol",
+	"category": "pistol",
+	"cost": 10,
+	"profiles": {
+	  "standard": {
+		"range": { "short": 8, "long": 16 },
+		"acc": { "short": 1, "long": 0 },
+		"s": 3,
+		"ap": 0,
+		"d": 1,
+		"ammo": { "check": 2, "type": "standard" },
+		"traits": []
+	  }
+	}
+  },
+  {
+	"id": "hotshot_lasgun",
+	"name": "Hot-shot Lasgun",
+	"category": "basic",
+	"cost": 25,
+	"profiles": {
+	  "standard": {
+		"range": { "short": 12, "long": 24 },
+		"acc": { "short": 1, "long": 0 },
+		"s": 4,
+		"ap": -1,
+		"d": 1,
+		"ammo": { "check": 4, "type": "hotshot" },
+		"traits": []
+	  }
+	}
+  },
+  {
+	"id": "plasma_pistol",
+	"name": "Plasma Pistol",
+	"category": "pistol",
+	"cost": 35,
+	"profiles": {
+	  "low": {
+		"range": { "short": 8, "long": 16 },
+		"acc": { "short": 1, "long": 0 },
+		"s": 5,
+		"ap": -2,
+		"d": 1,
+		"ammo": { "check": 6, "type": "plasma_low" },
+		"traits": [{ "id": "plentiful", "value": null }]
+	  },
+	  "max": {
+		"range": { "short": 8, "long": 16 },
+		"acc": { "short": 1, "long": 0 },
+		"s": 7,
+		"ap": -3,
+		"d": 2,
+		"ammo": { "check": 8, "type": "plasma_max" },
+		"traits": [{ "id": "unstable", "value": null }]
+	  }
+	}
+  }
+]

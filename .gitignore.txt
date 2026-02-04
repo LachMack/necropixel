@@ -1,0 +1,18 @@
+# Godot 4+
+.godot/
+
+# Godot 3 (if applicable)
+.import/
+.export/
+export.cfg
+export_presets.cfg
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Logs / temp
+*.log
+
+# Optional: if you generate builds locally
+/builds/

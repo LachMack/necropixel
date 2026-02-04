@@ -1,0 +1,66 @@
+[
+  {
+    "id": "van_saar_leader",
+    "name": "Prime",
+    "faction_id": "van_saar",
+    "role": "leader",
+    "tags": ["house", "van_saar"],
+    "stats": { "m": 5, "ws": 4, "bs": 2, "s": 3, "t": 3, "w": 2, "i": 3, "a": 2, "ld": 5, "cl": 5, "wil": 6, "int": 5 },
+    "loadout": {
+      "equipped": {
+        "primary": { "item_id": "lasgun" },
+        "secondary": { "item_id": "plasma_pistol", "ammo_profile": "low" },
+        "armour": { "item_id": "mesh_armour" },
+        "wargear": []
+      }
+    }
+  },
+  {
+    "id": "van_saar_champion",
+    "name": "Archeotek",
+    "faction_id": "van_saar",
+    "role": "champion",
+    "tags": ["house", "van_saar"],
+    "stats": { "m": 5, "ws": 4, "bs": 2, "s": 3, "t": 3, "w": 2, "i": 3, "a": 2, "ld": 6, "cl": 6, "wil": 6, "int": 5 },
+    "loadout": {
+      "equipped": {
+        "primary": { "item_id": "hotshot_lasgun" },
+        "secondary": null,
+        "armour": { "item_id": "mesh_armour" },
+        "wargear": []
+      }
+    }
+  },
+  {
+    "id": "van_saar_ganger",
+    "name": "Tek",
+    "faction_id": "van_saar",
+    "role": "ganger",
+    "tags": ["house", "van_saar"],
+    "stats": { "m": 5, "ws": 4, "bs": 3, "s": 3, "t": 3, "w": 1, "i": 3, "a": 1, "ld": 7, "cl": 7, "wil": 7, "int": 6 },
+    "loadout": {
+      "equipped": {
+        "primary": { "item_id": "lasgun" },
+        "secondary": null,
+        "armour": { "item_id": "mesh_armour" },
+        "wargear": []
+      }
+    }
+  },
+  {
+    "id": "van_saar_juve",
+    "name": "Subtek",
+    "faction_id": "van_saar",
+    "role": "juve",
+    "tags": ["house", "van_saar"],
+    "stats": { "m": 5, "ws": 5, "bs": 4, "s": 3, "t": 3, "w": 1, "i": 4, "a": 1, "ld": 8, "cl": 8, "wil": 8, "int": 7 },
+    "loadout": {
+      "equipped": {
+        "primary": null,
+        "secondary": { "item_id": "laspistol" },
+        "armour": { "item_id": "mesh_armour" },
+        "wargear": []
+      }
+    }
+  }
+]

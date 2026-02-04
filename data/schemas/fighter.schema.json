@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "fighter.schema.json",
+  "type": "object",
+  "required": ["id", "name", "faction_id", "role", "stats", "loadout"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "faction_id": { "type": "string", "minLength": 1 },
+    "role": {
+      "type": "string",
+      "enum": ["leader", "champion", "ganger", "juve", "prospect", "hanger_on", "hired_gun"]
+    },
+    "tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "stats": {
+      "type": "object",
+      "required": ["m", "ws", "bs", "s", "t", "w", "i", "a", "ld", "cl", "wil", "int"],
+      "properties": {
+        "m": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "ws": { "type": "integer", "minimum": 2, "maximum": 6 },
+        "bs": { "type": "integer", "minimum": 2, "maximum": 6 },
+        "s": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "t": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "w": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "i": { "type": "integer", "minimum": 2, "maximum": 6 },
+        "a": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "ld": { "type": "integer", "minimum": 4, "maximum": 10 },
+        "cl": { "type": "integer", "minimum": 4, "maximum": 10 },
+        "wil": { "type": "integer", "minimum": 4, "maximum": 10 },
+        "int": { "type": "integer", "minimum": 4, "maximum": 10 }
+      },
+      "additionalProperties": false
+    },
+    "status": {
+      "type": "object",
+      "properties": {
+        "alive": { "type": "boolean", "default": true },
+        "in_recovery": { "type": "boolean", "default": false },
+        "conditions": { "type": "array", "items": { "type": "string" }, "default": [] }
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+    "progression": {
+      "type": "object",
+      "properties": {
+        "xp": { "type": "integer", "minimum": 0, "default": 0 },
+        "advances": { "type": "array", "items": { "type": "object" }, "default": [] }
+      },
+      "additionalProperties": false,
+      "default": {}
+    },
+    "loadout": {
+      "type": "object",
+      "required": ["equipped"],
+      "properties": {
+        "equipped": {
+          "type": "object",
+          "properties": {
+            "primary": { "$ref": "item_slot.schema.json" },
+            "secondary": { "$ref": "item_slot.schema.json" },
+            "armour": { "$ref": "item_slot.schema.json" },
+            "wargear": { "type": "array", "items": { "$ref": "item_slot.schema.json" }, "default": [] }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

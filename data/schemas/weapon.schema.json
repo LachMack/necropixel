@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "weapon.schema.json",
+  "type": "object",
+  "required": ["id", "name", "category", "profiles"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "category": {
+      "type": "string",
+      "enum": ["pistol", "basic", "special", "heavy", "melee", "grenade", "wargear"]
+    },
+    "rarity": { "type": "integer", "minimum": 0, "default": 0 },
+    "cost": { "type": "integer", "minimum": 0, "default": 0 },
+    "tags": { "type": "array", "items": { "type": "string" }, "default": [] },
+    "profiles": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "object",
+        "required": ["range", "acc", "s", "ap", "d", "traits"],
+        "properties": {
+          "range": {
+            "type": "object",
+            "required": ["short", "long"],
+            "properties": {
+              "short": { "type": "integer", "minimum": 0 },
+              "long": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          },
+          "acc": {
+            "type": "object",
+            "required": ["short", "long"],
+            "properties": {
+              "short": { "type": "integer" },
+              "long": { "type": "integer" }
+            },
+            "additionalProperties": false
+          },
+          "s": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "ap": { "type": "integer", "minimum": -6, "maximum": 6 },
+          "d": { "type": "integer", "minimum": 1, "maximum": 10 },
+          "ammo": {
+            "type": "object",
+            "properties": {
+              "check": { "type": "integer", "minimum": 0, "maximum": 12 },
+              "type": { "type": "string", "default": "standard" }
+            },
+            "additionalProperties": false,
+            "default": { "check": 0, "type": "standard" }
+          },
+          "traits": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id"],
+              "properties": {
+                "id": { "type": "string" },
+                "value": { "type": ["integer", "string", "null"], "default": null }
+              },
+              "additionalProperties": false
+            },
+            "default": []
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

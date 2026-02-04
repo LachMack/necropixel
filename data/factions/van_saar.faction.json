@@ -1,0 +1,20 @@
+{
+  "id": "van_saar",
+  "name": "Van Saar",
+  "style_tags": ["precision", "tech", "shooting"],
+  "starting_credits": 1000,
+  "starting_gang_size": 6,
+  "intro_story_id": "story_van_saar_01",
+  "archetype_pool": [
+    "van_saar_leader",
+    "van_saar_champion",
+    "van_saar_ganger",
+    "van_saar_juve"
+  ],
+  "default_loadout_pools": {
+    "leader": ["lasgun", "plasma_pistol"],
+    "champion": ["hotshot_lasgun", "lasgun"],
+    "ganger": ["lasgun"],
+    "juve": ["laspistol"]
+  }
+}

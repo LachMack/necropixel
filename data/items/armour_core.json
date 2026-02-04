@@ -1,0 +1,9 @@
+[
+  {
+    "id": "mesh_armour",
+    "name": "Mesh Armour",
+    "category": "wargear",
+    "cost": 15,
+    "armour": { "save": 5, "tags": ["armour"] }
+  }
+]
