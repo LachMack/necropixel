@@ -23,11 +23,17 @@ text = "Tactical Combat (Placeholder)"
 
 [node name="MissionLabel" type="Label" parent="Root"]
 unique_name_in_owner = true
+theme_override_font_sizes/font_size = 20
 text = "Mission: -"
 
 [node name="SelectedLabel" type="Label" parent="Root"]
 unique_name_in_owner = true
+theme_override_font_sizes/font_size = 20
 text = "Selected: (none)"
+
+[node name="TurnLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+text = "Turn: Friendly"
 
 [node name="BoardContainer" type="SubViewportContainer" parent="Root"]
 unique_name_in_owner = true
@@ -48,8 +54,23 @@ handle_input_locally = true
 unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="Root/BoardContainer/BoardViewport/World"]
+[node name="MoveGhosts" type="Node2D" parent="Root/BoardContainer/BoardViewport/World"]
+unique_name_in_owner = true
+
 enabled = true
 position = Vector2(512, 270)
+zoom = Vector2(0.8, 0.8)
+
+[node name="DetailsText" type="RichTextLabel" parent="Root"]
+unique_name_in_owner = true
+size_flags_vertical = 3
+theme_override_font_sizes/font_size = 16
+bbcode_enabled = true
+text = "Details: (none)"
+
+[node name="EndTurnButton" type="Button" parent="Root"]
+unique_name_in_owner = true
+text = "End Turn"
 
 [node name="ReturnButton" type="Button" parent="Root"]
 unique_name_in_owner = true
