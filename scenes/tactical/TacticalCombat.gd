@@ -9,6 +9,7 @@ const HIDEOUT_SCENE: String = "res://scenes/ui/HideoutHub.tscn"
 @onready var lbl_mission: Label = %MissionLabel
 @onready var lbl_selected: Label = %SelectedLabel
 @onready var lbl_turn: Label = %TurnLabel
+@onready var lbl_ghost_count: Label = %GhostCountLabel
 @onready var details_text: RichTextLabel = %DetailsText
 @onready var btn_return: Button = %ReturnButton
 @onready var btn_complete: Button = %CompleteButton
@@ -26,6 +27,8 @@ func _ready() -> void:
 	if btn_complete == null:
 		push_error("TacticalCombat: CompleteButton node is missing.")
 		return
+	if lbl_ghost_count == null:
+		push_error("TacticalCombat: GhostCountLabel node is missing.")
 
 	if board_viewport != null:
 		board_viewport.physics_object_picking = true
@@ -76,10 +79,9 @@ func _sync_board_viewport_size() -> void:
 	var container_size: Vector2 = board_container.size
 	if container_size.x <= 0.0 or container_size.y <= 0.0:
 		return
-	board_viewport.size = Vector2i(int(container_size.x), int(container_size.y))
 	var camera: Camera2D = world.get_node_or_null("Camera2D") as Camera2D
 	if camera != null:
-		camera.position = container_size * 0.5
+		camera.position = _get_token_bounds_center(container_size)
 
 func _spawn_tokens() -> void:
 	if world == null:
@@ -89,6 +91,8 @@ func _spawn_tokens() -> void:
 	for child in world.get_children():
 		if child is Camera2D:
 			continue
+		if child == move_ghosts:
+			continue
 		child.queue_free()
 
 	_selected_token = null
@@ -97,6 +101,11 @@ func _spawn_tokens() -> void:
 		details_text.text = "Details: (none)"
 
 	var fighters: Array = SaveGame.get_fighters()
+	var start_x: float = 160.0
+	var spacing_x: float = 140.0
+	var friendly_y: float = 160.0
+	var enemy_y: float = 340.0
+
 	for i in range(6):
 		var display_name: String = "Ally %d" % (i + 1)
 		if i < fighters.size():
@@ -104,10 +113,35 @@ func _spawn_tokens() -> void:
 			if typeof(fighter_raw) == TYPE_DICTIONARY:
 				var fighter: Dictionary = fighter_raw as Dictionary
 				display_name = str(fighter.get("name", display_name))
-		_spawn_token("friendly", display_name, i, Vector2(160 + i * 140, 160))
+		_spawn_token("friendly", display_name, i, Vector2(start_x + i * spacing_x, friendly_y))
 
 	for i in range(6):
-		_spawn_token("enemy", "Enemy %d" % (i + 1), i, Vector2(160 + i * 140, 320))
+		_spawn_token("enemy", "Enemy %d" % (i + 1), i, Vector2(start_x + i * spacing_x, enemy_y))
+
+	_sync_board_viewport_size()
+
+func _get_token_bounds_center(fallback_size: Vector2) -> Vector2:
+	var min_pos: Vector2 = Vector2(INF, INF)
+	var max_pos: Vector2 = Vector2(-INF, -INF)
+	var found: bool = false
+
+	for child in world.get_children():
+		if not (child is Area2D):
+			continue
+		var token: Area2D = child as Area2D
+		if not token.has_meta("side"):
+			continue
+		var pos: Vector2 = token.position
+		min_pos.x = min(min_pos.x, pos.x)
+		min_pos.y = min(min_pos.y, pos.y)
+		max_pos.x = max(max_pos.x, pos.x)
+		max_pos.y = max(max_pos.y, pos.y)
+		found = true
+
+	if not found:
+		return fallback_size * 0.5
+
+	return (min_pos + max_pos) * 0.5
 
 func _spawn_token(side: String, display_name: String, index: int, spawn_pos: Vector2) -> void:
 	var token: Area2D = Area2D.new()
@@ -124,17 +158,18 @@ func _spawn_token(side: String, display_name: String, index: int, spawn_pos: Vec
 	var body: Polygon2D = Polygon2D.new()
 	body.name = "Body"
 	body.color = base_color
+	var size: float = 30.0
 	body.polygon = PackedVector2Array([
-		Vector2(0, -30),
-		Vector2(30, 0),
-		Vector2(0, 30),
-		Vector2(-30, 0)
+		Vector2(0, -size),
+		Vector2(size, 0),
+		Vector2(0, size),
+		Vector2(-size, 0)
 	])
 	token.add_child(body)
 
 	var collision: CollisionShape2D = CollisionShape2D.new()
 	var shape: CircleShape2D = CircleShape2D.new()
-	shape.radius = 30.0
+	shape.radius = size
 	collision.shape = shape
 	token.add_child(collision)
 
@@ -174,6 +209,8 @@ func _clear_move_ghosts() -> void:
 		return
 	for child in move_ghosts.get_children():
 		child.queue_free()
+	if lbl_ghost_count != null:
+		lbl_ghost_count.text = "Ghosts: 0"
 
 func _refresh_move_ghosts_for_selected() -> void:
 	_clear_move_ghosts()
@@ -206,22 +243,43 @@ func _refresh_move_ghosts_for_selected() -> void:
 
 	var step: float = 64.0
 	var origin: Vector2 = _selected_token.position
+	var ghost_size: float = 14.0
+	var ghost_color: Color = Color(1.0, 1.0, 0.2, 0.45)
+	var positions: Array[Vector2] = []
+	positions.append(origin + Vector2(step, 0.0))
+	positions.append(origin + Vector2(-step, 0.0))
+	positions.append(origin + Vector2(0.0, step))
+	positions.append(origin + Vector2(0.0, -step))
+
 	for dx in range(-move_range, move_range + 1):
 		for dy in range(-move_range, move_range + 1):
 			if dx == 0 and dy == 0:
 				continue
 			if abs(dx) + abs(dy) > move_range:
 				continue
-			var ghost: Polygon2D = Polygon2D.new()
-			ghost.color = Color(1.0, 1.0, 0.2, 0.25)
-			ghost.polygon = PackedVector2Array([
-				Vector2(0, -16),
-				Vector2(16, 0),
-				Vector2(0, 16),
-				Vector2(-16, 0)
-			])
-			ghost.position = origin + Vector2(dx * step, dy * step)
-			move_ghosts.add_child(ghost)
+			positions.append(origin + Vector2(dx * step, dy * step))
+
+	var ghost_count: int = 0
+	var spawned: Dictionary = {}
+	for pos in positions:
+		var key: String = "%d,%d" % [int(pos.x), int(pos.y)]
+		if spawned.has(key):
+			continue
+		spawned[key] = true
+		var ghost: Polygon2D = Polygon2D.new()
+		ghost.color = ghost_color
+		ghost.polygon = PackedVector2Array([
+			Vector2(0, -ghost_size),
+			Vector2(ghost_size, 0),
+			Vector2(0, ghost_size),
+			Vector2(-ghost_size, 0)
+		])
+		ghost.position = pos
+		move_ghosts.add_child(ghost)
+		ghost_count += 1
+
+	if lbl_ghost_count != null:
+		lbl_ghost_count.text = "Ghosts: %d" % ghost_count
 
 func _refresh_details_for_token(token: Area2D) -> void:
 	if details_text == null:

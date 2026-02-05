@@ -35,8 +35,14 @@ text = "Selected: (none)"
 unique_name_in_owner = true
 text = "Turn: Friendly"
 
+[node name="GhostCountLabel" type="Label" parent="Root"]
+unique_name_in_owner = true
+text = "Ghosts: 0"
+
 [node name="BoardContainer" type="SubViewportContainer" parent="Root"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 360)
+size_flags_horizontal = 3
 size_flags_vertical = 3
 mouse_filter = 0
 clip_contents = true
@@ -44,7 +50,6 @@ stretch = true
 
 [node name="BoardViewport" type="SubViewport" parent="Root/BoardContainer"]
 unique_name_in_owner = true
-size = Vector2i(1024, 540)
 disable_3d = true
 render_target_update_mode = 4
 physics_object_picking = true
@@ -54,16 +59,16 @@ handle_input_locally = true
 unique_name_in_owner = true
 
 [node name="Camera2D" type="Camera2D" parent="Root/BoardContainer/BoardViewport/World"]
-[node name="MoveGhosts" type="Node2D" parent="Root/BoardContainer/BoardViewport/World"]
-unique_name_in_owner = true
-
 enabled = true
 position = Vector2(512, 270)
 zoom = Vector2(0.8, 0.8)
 
+[node name="MoveGhosts" type="Node2D" parent="Root/BoardContainer/BoardViewport/World"]
+unique_name_in_owner = true
+
 [node name="DetailsText" type="RichTextLabel" parent="Root"]
 unique_name_in_owner = true
-size_flags_vertical = 3
+custom_minimum_size = Vector2(0, 120)
 theme_override_font_sizes/font_size = 16
 bbcode_enabled = true
 text = "Details: (none)"
